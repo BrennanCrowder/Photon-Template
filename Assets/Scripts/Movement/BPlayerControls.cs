@@ -90,11 +90,11 @@ public class BPlayerControls : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (!grabbing) 
+            if (!grabbing && !throwing) 
             {
                 //Debug.Log("Grabbing...");
                 AttemptGrab();
-            } else
+            } else if (!throwing)
             {
                 //Debug.Log("Dropping...");
                 Drop();
