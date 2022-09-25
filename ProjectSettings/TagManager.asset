@@ -68,3 +68,9 @@ TagManager:
   - name: Hazards
     uniqueID: 1574216593
     locked: 0
+  - name: Walls
+    uniqueID: 2212998549
+    locked: 0
+  - name: Hoop
+    uniqueID: 1783712293
+    locked: 0

@@ -5210,7 +5210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  jumpPower: 15
+  jumpPower: 10
   jumpCheckDist: 0.3
   playerBody: {fileID: 9199016485280215240}
   playerCollider: {fileID: 9199016485280215244}
