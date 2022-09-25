@@ -115,11 +115,13 @@ public class SPlayerControls : MonoBehaviour
         doNotKill = true;
         //playerCollider.isTrigger = true;
         playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
-        playerBody.useGravity = false;
+        
         isThrown = false;
         isGrabbed = true;
         playerBody.velocity = Vector3.zero;
         playerBody.angularVelocity = Vector3.zero;
+        playerBody.useGravity = false;
+        playerBody.Sleep();
     }
 
     public void Dropped(bool unParent = false, bool resetLayer = false)

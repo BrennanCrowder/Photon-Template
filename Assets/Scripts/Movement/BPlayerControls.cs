@@ -235,9 +235,10 @@ public class BPlayerControls : MonoBehaviour
             lCrushTrigger.enableCrush = false;
             rCrushTrigger.enableCrush = false;
             //rb.transform.rotation = hand.transform.rotation;
-            rbScript.Grabbed();
+            
             sPlayer.transform.SetParent(hand.transform);
             rb.transform.position = hand.transform.position;
+            rbScript.Grabbed();
             scrpt.ResetTarget();
             grabbedObject = sPlayer;
         } else
