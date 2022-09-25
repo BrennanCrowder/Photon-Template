@@ -8,10 +8,13 @@ public class SPlayerControls : MonoBehaviour
     public float jumpPower = 3;
     public float jumpCheckDist = 1f;
     public Rigidbody playerBody;
+    public Collider playerCollider;
     public ParticleSystem deathParticles;
     private bool moving;
     private Coroutine moveRountine;
     private Renderer renderer;
+    public bool isGrabbed = false;
+    
 
     private void Awake()
     {
@@ -25,7 +28,7 @@ public class SPlayerControls : MonoBehaviour
             moving = false;
             StopCoroutine(moveRountine);
         }
-        if (ctx.performed)
+        if (ctx.performed && !isGrabbed)
         {
             moving = true;
             moveRountine = StartCoroutine(SMoving(ctx));
@@ -72,6 +75,21 @@ public class SPlayerControls : MonoBehaviour
         renderer.enabled = false;
         playerBody.GetComponent<Collider>().enabled = false;
         StartCoroutine(SpawnDelay(spawnLocation));
+    }
+
+    public void Grabbed()
+    {
+        playerCollider.enabled = false;
+        playerBody.velocity = Vector3.zero;
+        playerBody.useGravity = false;
+        isGrabbed = true;
+    }
+
+    public void Dropped()
+    {
+        playerCollider.enabled = true;
+        playerBody.useGravity = true;
+        isGrabbed = false;
     }
 
     IEnumerator SpawnDelay(Transform spawnLocation)

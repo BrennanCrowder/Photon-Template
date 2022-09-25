@@ -29,4 +29,6 @@ public class BTriggerScript : MonoBehaviour
     {
         return body;
     }
+
+    //public GameObject
 }

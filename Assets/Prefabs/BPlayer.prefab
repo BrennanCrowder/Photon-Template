@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6304686907711451716}
   - component: {fileID: 5157979172005638189}
   - component: {fileID: 8530412172853986181}
+  - component: {fileID: 7865830340800236150}
   m_Layer: 3
   m_Name: BRHand
   m_TagString: Untagged
@@ -99,6 +100,25 @@ MonoBehaviour:
   targetTransform: {fileID: 4734688967172259579}
   speed: 0.001
   pauseReposition: 0
+--- !u!1818360609 &7865830340800236150
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175031590595725027}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 6396416957004145095}
+    weight: 1
 --- !u!1 &569794809568102297
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +156,7 @@ Transform:
   - {fileID: 3177025008875906678}
   - {fileID: 1081165522491400273}
   - {fileID: 2273847703087666778}
+  - {fileID: 8013665061696676450}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,10 +242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f6d9ccc720d9b48b9434972be280b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.75
+  moveSpeed: 2
   playerBody: {fileID: 599051624790330283}
   grabTrigger: {fileID: 2654864318088039391}
-  crushTrigger: {fileID: 3954448840552538699}
+  lCrushTrigger: {fileID: 3954448840552538699}
+  rCrushTrigger: {fileID: 1397963922364711035}
+  rHand: {fileID: 175031590595725027}
+  lHand: {fileID: 8910196043748961777}
+  grabDistance: 0.15
+  grabSpeed: 0.01
 --- !u!1 &1160492251107581955
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +345,86 @@ PositionConstraint:
   m_Weight: 1
   m_TranslationAtRest: {x: 0, y: 0.512, z: -0.025}
   m_TranslationOffset: {x: 0, y: 0.512, z: -0.025}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 6396416957004145095}
+    weight: 1
+--- !u!1 &2764541575600334299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8013665061696676450}
+  - component: {fileID: 2129012590549049852}
+  - component: {fileID: 1397963922364711035}
+  - component: {fileID: 1925676307978338188}
+  m_Layer: 3
+  m_Name: RCrushTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8013665061696676450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764541575600334299}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.55, y: -0.8, z: 0}
+  m_LocalScale: {x: 0.65977234, y: 0.6144738, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3492040184532617458}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2129012590549049852
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764541575600334299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1397963922364711035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764541575600334299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf0d425d0b080a4eaf6dc616422592c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SLocation: {fileID: 2273847703087666778}
+  enableCrush: 0
+--- !u!1818360608 &1925676307978338188
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764541575600334299}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: -0.55, y: -0.8, z: 0}
+  m_TranslationOffset: {x: -0.55, y: -0.8, z: 0}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
@@ -475,7 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 821921008635700746}
-  speed: 0.001
+  speed: 0.005
   pauseReposition: 0
 --- !u!1 &6396416957004145116
 GameObject:
@@ -587,7 +693,7 @@ Rigidbody:
   m_GameObject: {fileID: 6396416957004145116}
   serializedVersion: 2
   m_Mass: 10
-  m_Drag: 0
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -673,7 +779,7 @@ GameObject:
   - component: {fileID: 3954448840552538699}
   - component: {fileID: 4254434351769853826}
   m_Layer: 3
-  m_Name: CrushTrigger
+  m_Name: LCrushTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -687,8 +793,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6568249997363662889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.785, z: 0}
-  m_LocalScale: {x: 1.7026383, y: 0.6144738, z: 1}
+  m_LocalPosition: {x: 0.55, y: -0.8, z: 0}
+  m_LocalScale: {x: 0.65977234, y: 0.6144738, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3492040184532617458}
@@ -730,8 +836,8 @@ PositionConstraint:
   m_GameObject: {fileID: 6568249997363662889}
   m_Enabled: 1
   m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: -0.785, z: 0}
-  m_TranslationOffset: {x: 0, y: -0.785, z: 0}
+  m_TranslationAtRest: {x: 0.55, y: -0.8, z: 0}
+  m_TranslationOffset: {x: 0.55, y: -0.8, z: 0}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
@@ -861,6 +967,7 @@ GameObject:
   - component: {fileID: 4700310618956363433}
   - component: {fileID: 3691860327679271717}
   - component: {fileID: 1597344447967658238}
+  - component: {fileID: 1353420886572620543}
   m_Layer: 3
   m_Name: BLHand
   m_TagString: Untagged
@@ -948,3 +1055,22 @@ MonoBehaviour:
   targetTransform: {fileID: 3106190341953554315}
   speed: 0.001
   pauseReposition: 0
+--- !u!1818360609 &1353420886572620543
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910196043748961777}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 6396416957004145095}
+    weight: 1
