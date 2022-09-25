@@ -609,6 +609,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 589485046187458573, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3088170996271856126, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 

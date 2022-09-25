@@ -27,6 +27,7 @@ public class BPlayerControls : MonoBehaviour
     public float grabDistance = 1;
     private bool fire;
     [HideInInspector] public GameObject grabbedObject;
+    [HideInInspector] public GameObject grabHand;
     public float grabSpeed = .75f;
 
     private WaitForFixedUpdate fixedWait;
@@ -192,6 +193,7 @@ public class BPlayerControls : MonoBehaviour
         Rigidbody rb = rbScript.playerBody; // SBody
 
         GameObject hand = Vector3.Distance(rHand.transform.position, rb.transform.position) > Vector3.Distance(lHand.transform.position, rb.transform.position) ? lHand : rHand; // Closest Hand
+        grabHand = hand;
 
         MoveToTarget scrpt = hand.GetComponent<MoveToTarget>(); // Hand Script
 
