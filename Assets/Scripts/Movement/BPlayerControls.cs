@@ -71,6 +71,7 @@ public class BPlayerControls : MonoBehaviour
         if (grabbing && grabbedObject != null)
         {
             grabbedObject.GetComponent<SPlayerControls>().playerBody.Sleep();
+            grabbedObject.GetComponent<SPlayerControls>().playerBody.transform.position = grabHand.transform.position;
         }
         
     }
