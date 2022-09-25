@@ -118,7 +118,7 @@ public class SPlayerControls : MonoBehaviour
     private void Update()
     {
         animator.SetBool("Walking", playerBody.velocity.magnitude > minWalkSpeed);
-        animator.SetBool("Grounded", CheckGrounded());
+        animator.SetBool("Grounded", (CheckGrounded() && !isGrabbed));
         animator.SetBool("Grabbed", isGrabbed);
     }
 

@@ -44,16 +44,22 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Crab
-    uniqueID: 1046554545
-    locked: 0
   - name: Body
     uniqueID: 775422029
     locked: 0
   - name: Shoulders
     uniqueID: 4152390605
     locked: 0
-  - name: Head&Hands
+  - name: Hands
+    uniqueID: 39515155
+    locked: 0
+  - name: Crab
+    uniqueID: 1046554545
+    locked: 0
+  - name: Fingers
+    uniqueID: 435931405
+    locked: 0
+  - name: Head
     uniqueID: 2532178337
     locked: 0
   - name: Pupils
