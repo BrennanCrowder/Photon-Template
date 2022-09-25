@@ -10,7 +10,7 @@ public class BTriggerScript : MonoBehaviour
         if(other.tag == "SPlayer" )
         {
             body = other.gameObject.transform.parent.gameObject; // Get Reference to SPlayer root
-            Debug.Log("SPlayer ON Platform");
+           // Debug.Log("SPlayer ON Platform");
             if (!body.GetComponent<SPlayerControls>().isGrabbed)
             {
                 
@@ -24,7 +24,7 @@ public class BTriggerScript : MonoBehaviour
     {
         if (other.tag == "SPlayer")
         {
-            Debug.Log("SPlayer OFF Platform");
+            //Debug.Log("SPlayer OFF Platform");
             if (!body.GetComponent<SPlayerControls>().isGrabbed)
             {
                 body.transform.SetParent(null);

@@ -48,8 +48,12 @@ public class BPlayerControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        lCrushTrigger.enableCrush = playerBody.velocity.x > .15;
-        rCrushTrigger.enableCrush = playerBody.velocity.x < -.15;
+        if (!grabbing)
+        {
+            lCrushTrigger.enableCrush = playerBody.velocity.x > .15;
+            rCrushTrigger.enableCrush = playerBody.velocity.x < -.15;
+        }
+        
     }
     public void Move(InputAction.CallbackContext ctx)
     {
@@ -73,11 +77,11 @@ public class BPlayerControls : MonoBehaviour
         {
             if (!grabbing) 
             {
-                Debug.Log("Grabbing...");
+                //Debug.Log("Grabbing...");
                 AttemptGrab();
             } else
             {
-                Debug.Log("Dropping...");
+                //Debug.Log("Dropping...");
                 Drop();
             }
         } 
@@ -124,7 +128,7 @@ public class BPlayerControls : MonoBehaviour
 
     public void Fire(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && !fire)
+        if (ctx.performed && throwing && !fire)
         {
             fire = true;
         }
@@ -188,7 +192,7 @@ public class BPlayerControls : MonoBehaviour
     IEnumerator Grab(GameObject sPlayer)
     {
         grabbing = true;
-        Debug.Log(sPlayer);
+        //Debug.Log(sPlayer);
         SPlayerControls rbScript = sPlayer.GetComponent<SPlayerControls>();// SPlayer
         Rigidbody rb = rbScript.playerBody; // SBody
 
@@ -272,12 +276,20 @@ public class BPlayerControls : MonoBehaviour
           
             yield return fixedWait;
         }
-        if (fire)
+        if (fire)// && Vector3.Angle(relativePos.normalized, Vector3.down) >= 60
         {
-            sPlayerScript.playerBody.AddForce(changePos * 50, ForceMode.Impulse);
+            //sPlayerScript.gameObject.layer = LayerMask.NameToLayer("Grabbed");
+            sPlayerScript.playerBody.AddForce(changePos * 40, ForceMode.Impulse);
             sPlayerScript.ThrowAnim();
+            sPlayerScript.playerBody.useGravity = true;
+            playerBody.angularDrag = 0.05f;
+            grabbing = false;
+            grabbedObject = null;
+            escapeTimer = 0;
         }
         handScript.pauseReposition = false;
+        
+        throwing = false;
         fire = false;
     yield return null;
     }

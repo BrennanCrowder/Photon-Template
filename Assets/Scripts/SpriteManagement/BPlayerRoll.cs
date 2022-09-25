@@ -17,7 +17,7 @@ public class BPlayerRoll : MonoBehaviour
     {
         Vector3 rotate = Vector3.zero;
         rotate.z = maxRotation * (Mathf.Abs(playerBody.velocity.x) / (Mathf.Abs(playerBody.velocity.x) + 2)) * -Mathf.Sign(playerBody.velocity.x);
-        Debug.Log(rotate.z);
+        //Debug.Log(rotate.z);
         bodySprite.transform.rotation = Quaternion.Euler(rotate);
     }
 }

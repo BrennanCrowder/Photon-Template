@@ -15,7 +15,7 @@ public class SPlayerControls : MonoBehaviour
     private SpriteRenderer renderer;
     private Animator animator;
     public bool isGrabbed = false;
-
+    public bool isThrown;
     [Header("Animator Variables")]
     public float minWalkSpeed = 0.1f;    
 
@@ -90,19 +90,22 @@ public class SPlayerControls : MonoBehaviour
 
     public void Grabbed()
     {
-        playerCollider.isTrigger = true;
+        //playerCollider.isTrigger = true;
+        playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
         playerBody.velocity = Vector3.zero;
         playerBody.angularVelocity = Vector3.zero;
         playerBody.useGravity = false;
+        isThrown = false;
         isGrabbed = true;
     }
 
     public void Dropped()
     {
-        playerCollider.isTrigger = false;
+        playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
         playerBody.useGravity = true;
-        playerBody.velocity = Vector3.zero;
-        playerBody.angularVelocity = Vector3.zero;
+        //Debug.Log("RESET Collider and Grav");
+        //playerBody.velocity = Vector3.zero;
+        //playerBody.angularVelocity = Vector3.zero;
         isGrabbed = false;
     }
 
