@@ -12,7 +12,7 @@ public class SPlayerControls : MonoBehaviour
     public ParticleSystem deathParticles;
     private bool moving;
     private Coroutine moveRountine;
-    private Renderer renderer;
+    private SpriteRenderer renderer;
     private Animator animator;
     public bool isGrabbed = false;
 
@@ -21,7 +21,7 @@ public class SPlayerControls : MonoBehaviour
 
     private void Awake()
     {
-        renderer = playerBody.GetComponent<Renderer>();
+        renderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
     }
 
