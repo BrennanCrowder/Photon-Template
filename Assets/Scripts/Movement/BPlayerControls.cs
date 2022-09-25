@@ -210,7 +210,8 @@ public class BPlayerControls : MonoBehaviour
         //Debug.Log(sPlayer);
         SPlayerControls rbScript = sPlayer.GetComponent<SPlayerControls>();// SPlayer
         Rigidbody rb = rbScript.playerBody; // SBody
-
+        lCrushTrigger.enableCrush = false;
+        rCrushTrigger.enableCrush = false;
         GameObject hand = Vector3.Distance(rHand.transform.position, rb.transform.position) > Vector3.Distance(lHand.transform.position, rb.transform.position) ? lHand : rHand; // Closest Hand
         grabHand = hand;
 
@@ -235,7 +236,7 @@ public class BPlayerControls : MonoBehaviour
             lCrushTrigger.enableCrush = false;
             rCrushTrigger.enableCrush = false;
             //rb.transform.rotation = hand.transform.rotation;
-            
+
             sPlayer.transform.SetParent(hand.transform);
             rb.transform.position = hand.transform.position;
             rbScript.Grabbed();
