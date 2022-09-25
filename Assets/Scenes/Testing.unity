@@ -675,10 +675,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spikes
       objectReference: {fileID: 0}
-    - target: {fileID: 298340833914974669, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 630423296528583622, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -723,33 +719,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8994890167989842493, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
-      propertyPath: m_SortingLayer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8994890167989842493, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1574216593
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
---- !u!1 &5598112272128024456 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 298340833914974669, guid: 464cdfad78fbed24cbf99c62e749ccbc, type: 3}
-  m_PrefabInstance: {fileID: 5598112272128024455}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5598112272128024457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5598112272128024456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad9dd5a7ce938049bdcb3ef0a5d189c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &9199016484559818964
 PrefabInstance:
   m_ObjectHideFlags: 0
