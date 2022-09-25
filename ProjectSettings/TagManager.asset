@@ -41,6 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Bg2
+    uniqueID: 1233801199
+    locked: 0
+  - name: Bg1
+    uniqueID: 2504334965
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -67,6 +73,9 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 1574216593
+    locked: 0
+  - name: Door
+    uniqueID: 2920167947
     locked: 0
   - name: Walls
     uniqueID: 2212998549
