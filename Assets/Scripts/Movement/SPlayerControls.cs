@@ -13,12 +13,16 @@ public class SPlayerControls : MonoBehaviour
     private bool moving;
     private Coroutine moveRountine;
     private Renderer renderer;
+    private Animator animator;
     public bool isGrabbed = false;
-    
+
+    [Header("Animator Variables")]
+    public float minWalkSpeed = 0.1f;    
 
     private void Awake()
     {
         renderer = playerBody.GetComponent<Renderer>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void Move(InputAction.CallbackContext ctx)
@@ -98,5 +102,14 @@ public class SPlayerControls : MonoBehaviour
         playerBody.transform.position = spawnLocation.position;
         playerBody.GetComponent<Collider>().enabled = true;
         renderer.enabled = true;
+    }
+
+    // Update Animator
+    private void Update()
+    {
+        animator.SetBool("Walking", playerBody.velocity.magnitude > minWalkSpeed);
+        animator.SetBool("Grounded", CheckGrounded());
+        animator.SetBool("Grabbed", isGrabbed);
+        // NEED TO ADD THROWN ANIMATION
     }
 }
