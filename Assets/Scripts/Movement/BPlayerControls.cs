@@ -29,11 +29,19 @@ public class BPlayerControls : MonoBehaviour
     [HideInInspector] public GameObject grabbedObject;
     [HideInInspector] public GameObject grabHand;
     public float grabSpeed = .75f;
-
+    private Transform startingPos;
     private WaitForFixedUpdate fixedWait;
+    private List<SpriteRenderer> renderers = new List<SpriteRenderer>();
+    private ParticleSystem deathParticles;
     private void Awake()
     {
         //Cursor.lockState = CursorLockMode.Confined;
+        deathParticles = playerBody.GetComponent<ParticleSystem>();
+        foreach (SpriteRenderer rend in GetComponentsInChildren<SpriteRenderer>())
+        {
+            renderers.Add(rend);
+        }
+        startingPos = transform;
         playerControls = new InputActionMap("PlayerControls");
         fixedWait = new WaitForFixedUpdate();
         
@@ -310,5 +318,30 @@ public class BPlayerControls : MonoBehaviour
         throwing = false;
         fire = false;
     yield return null;
+    }
+
+    public void Kill()
+    {
+        // Particles
+        // Sound
+        // Death
+        deathParticles.Play();
+        foreach(SpriteRenderer rend in renderers)
+        {
+            rend.enabled = false;
+        }
+        playerBody.GetComponent<Collider>().enabled = false;
+        StartCoroutine(BSpawnDelay(startingPos));
+    }
+
+    IEnumerator BSpawnDelay(Transform spawnLocation)
+    {
+        yield return new WaitForSeconds(1);
+        playerBody.transform.position = spawnLocation.position;
+        playerBody.GetComponent<Collider>().enabled = true;
+        foreach (SpriteRenderer rend in renderers)
+        {
+            rend.enabled = true;
+        }
     }
 }
