@@ -892,6 +892,8 @@ GameObject:
   - component: {fileID: 3763998298740701141}
   - component: {fileID: 1695782891264690801}
   - component: {fileID: 1257555707}
+  - component: {fileID: 5913581305472618005}
+  - component: {fileID: 2446929683264134871}
   m_Layer: 3
   m_Name: BHead
   m_TagString: Untagged
@@ -1002,6 +1004,39 @@ RotationConstraint:
   m_Sources:
   - sourceTransform: {fileID: 3492040184532617458}
     weight: 1
+--- !u!95 &5913581305472618005
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252396905718609035}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd1c0f2006787794f8887a9dc4ee6a03, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2446929683264134871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252396905718609035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2819d5e12a5124bbb59c7940fc3464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headAnimator: {fileID: 5913581305472618005}
 --- !u!1 &6396416957004145116
 GameObject:
   m_ObjectHideFlags: 0
