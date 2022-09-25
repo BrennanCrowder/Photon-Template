@@ -20,6 +20,8 @@ public class SPlayerControls : MonoBehaviour
     public float minWalkSpeed = 0.1f;
     public Transform startingPos;
     private bool doNotKill;
+    public AudioSource deathSound;
+    public AudioClip clip;
     private void Awake()
     {
         renderer = GetComponentInChildren<SpriteRenderer>();
@@ -104,6 +106,7 @@ public class SPlayerControls : MonoBehaviour
         // Life?
         // Reset Pos
         deathParticles.Play();
+        deathSound.PlayOneShot(clip);
         Dropped();
         renderer.enabled = false;
         playerBody.GetComponent<Collider>().enabled = false;
