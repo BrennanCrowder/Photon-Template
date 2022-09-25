@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 4734688967172259579}
   defaultTarget: {fileID: 0}
-  speed: 0.002
+  speed: 0.004
   pauseReposition: 0
 --- !u!1818360609 &7865830340800236150
 RotationConstraint:
@@ -481,7 +481,7 @@ MonoBehaviour:
   lHand: {fileID: 8910196043748961777}
   crosshair: {fileID: 564554729}
   dropLocation: {fileID: 2273847703087666778}
-  grabDistance: 0.5
+  grabDistance: 0.25
   grabbedObject: {fileID: 0}
   grabHand: {fileID: 0}
   grabSpeed: 0.01
@@ -6693,7 +6693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 3106190341953554315}
   defaultTarget: {fileID: 0}
-  speed: 0.002
+  speed: 0.004
   pauseReposition: 0
 --- !u!1818360609 &1353420886572620543
 RotationConstraint:

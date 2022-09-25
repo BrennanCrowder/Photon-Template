@@ -121,6 +121,7 @@ public class SPlayerControls : MonoBehaviour
         playerBody.velocity = Vector3.zero;
         playerBody.angularVelocity = Vector3.zero;
         playerBody.useGravity = false;
+        playerBody.ResetCenterOfMass();
         playerBody.Sleep();
     }
 

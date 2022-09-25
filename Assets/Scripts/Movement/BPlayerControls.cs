@@ -68,6 +68,10 @@ public class BPlayerControls : MonoBehaviour
             grabbedObject = null;
             escapeTimer = 0;
         }
+        if (grabbing && grabbedObject != null)
+        {
+            grabbedObject.GetComponent<SPlayerControls>().playerBody.Sleep();
+        }
         
     }
     public void Move(InputAction.CallbackContext ctx)
@@ -238,8 +242,9 @@ public class BPlayerControls : MonoBehaviour
             //rb.transform.rotation = hand.transform.rotation;
 
             sPlayer.transform.SetParent(hand.transform);
-            rb.transform.position = hand.transform.position;
+            
             rbScript.Grabbed();
+            rb.transform.position = hand.transform.position;
             scrpt.ResetTarget();
             grabbedObject = sPlayer;
         } else
