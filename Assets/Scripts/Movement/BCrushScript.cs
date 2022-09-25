@@ -12,7 +12,7 @@ public class BCrushScript : MonoBehaviour
         {
             Debug.Log("Crushing Player...");
             other.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            other.transform.parent.GetComponent<SPlayerControls>().Kill(SLocation);
+            other.transform.parent.GetComponent<SPlayerControls>().Kill();
         }
     }
 }
