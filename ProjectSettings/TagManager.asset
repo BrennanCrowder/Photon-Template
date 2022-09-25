@@ -17,7 +17,7 @@ TagManager:
   - SPlayer
   - Platform
   - Grabbed
-  - 
+  - Hazards
   - 
   - 
   - 
@@ -64,4 +64,7 @@ TagManager:
     locked: 0
   - name: Pupils
     uniqueID: 994922777
+    locked: 0
+  - name: Hazards
+    uniqueID: 1574216593
     locked: 0

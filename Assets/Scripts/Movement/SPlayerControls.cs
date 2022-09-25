@@ -12,17 +12,19 @@ public class SPlayerControls : MonoBehaviour
     public ParticleSystem deathParticles;
     private bool moving;
     private Coroutine moveRountine;
-    private SpriteRenderer renderer;
+    public SpriteRenderer renderer;
     private Animator animator;
     public bool isGrabbed = false;
     public bool isThrown;
     [Header("Animator Variables")]
-    public float minWalkSpeed = 0.1f;    
-
+    public float minWalkSpeed = 0.1f;
+    public Transform startingPos;
+    private bool doNotKill;
     private void Awake()
     {
         renderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+        startingPos.position = transform.position;
     }
 
     public void Move(InputAction.CallbackContext ctx)
@@ -75,14 +77,34 @@ public class SPlayerControls : MonoBehaviour
         }
         yield return null;
     }
-
-    public void Kill(Transform spawnLocation)
+    public void Kill()
     {
+        if (doNotKill)
+        {
+            return;
+        }
         // Particle
         // Sound
         // Life?
         // Reset Pos
         deathParticles.Play();
+        Dropped(true,true);
+        renderer.enabled = false;
+        playerBody.GetComponent<Collider>().enabled = false;
+        StartCoroutine(SpawnDelay(startingPos));
+    }
+    public void Kill(Transform spawnLocation)
+    {
+        if (doNotKill)
+        {
+            return;
+        }
+        // Particle
+        // Sound
+        // Life?
+        // Reset Pos
+        deathParticles.Play();
+        Dropped();
         renderer.enabled = false;
         playerBody.GetComponent<Collider>().enabled = false;
         StartCoroutine(SpawnDelay(spawnLocation));
@@ -90,6 +112,7 @@ public class SPlayerControls : MonoBehaviour
 
     public void Grabbed()
     {
+        doNotKill = true;
         //playerCollider.isTrigger = true;
         playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
         playerBody.useGravity = false;
@@ -99,14 +122,20 @@ public class SPlayerControls : MonoBehaviour
         playerBody.angularVelocity = Vector3.zero;
     }
 
-    public void Dropped()
+    public void Dropped(bool unParent = false, bool resetLayer = false)
     {
-        playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
-        
+        doNotKill = false;
+        if (unParent)
+        {
+            transform.SetParent(null);
+            
+        }
+        if (resetLayer)
+        {
+            playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
+        }
         playerBody.useGravity = true;
-        //Debug.Log("RESET Collider and Grav");
-        //playerBody.velocity = Vector3.zero;
-        //playerBody.angularVelocity = Vector3.zero;
+
         isGrabbed = false;
     }
 
@@ -128,7 +157,7 @@ public class SPlayerControls : MonoBehaviour
 
     public void ThrowAnim()
     {
-        isGrabbed = false;
+        Dropped(true,false);
         animator.SetTrigger("Thrown");
     }
 }

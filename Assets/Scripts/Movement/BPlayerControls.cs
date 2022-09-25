@@ -33,6 +33,7 @@ public class BPlayerControls : MonoBehaviour
     private WaitForFixedUpdate fixedWait;
     private void Awake()
     {
+        //Cursor.lockState = CursorLockMode.Confined;
         playerControls = new InputActionMap("PlayerControls");
         fixedWait = new WaitForFixedUpdate();
         
@@ -52,6 +53,12 @@ public class BPlayerControls : MonoBehaviour
         {
             lCrushTrigger.enableCrush = playerBody.velocity.x > .15;
             rCrushTrigger.enableCrush = playerBody.velocity.x < -.15;
+        } else if (grabbedObject != null && !grabbedObject.GetComponent<SPlayerControls>().renderer.enabled) 
+        {
+            grabbing = false;
+            playerBody.angularDrag = 0.05f;
+            grabbedObject = null;
+            escapeTimer = 0;
         }
         
     }
@@ -159,8 +166,8 @@ public class BPlayerControls : MonoBehaviour
                 var scrpt = grabbedObject.GetComponent<SPlayerControls>();
 
                 playerBody.angularDrag = 0.05f;
-                scrpt.transform.SetParent(null);
-                scrpt.Dropped();
+                //scrpt.transform.SetParent(null);
+                scrpt.Dropped(true,true);
 
                 grabbing = false;
                 handScript.ResetTarget();
@@ -248,7 +255,7 @@ public class BPlayerControls : MonoBehaviour
         
         playerBody.angularDrag = 0.05f;
         //scrpt.transform.SetParent(null);
-        scrpt.Dropped();
+        scrpt.Dropped(true,true);
        
         grabbing = false;
         handScript.ResetTarget();
@@ -280,6 +287,7 @@ public class BPlayerControls : MonoBehaviour
             //sPlayerScript.playerBody.isKinematic = true;
             relativePos = crosshair.transform.position - hand.transform.position;
             changePos = (relativePos.magnitude / (relativePos.magnitude + 2)) * relativePos.normalized * 0.75f;
+            changePos *= -1;
             hand.transform.position = origHandPos - changePos;
           
             yield return fixedWait;
@@ -288,9 +296,10 @@ public class BPlayerControls : MonoBehaviour
         if (fire)// && Vector3.Angle(relativePos.normalized, Vector3.down) >= 60
         {
             //sPlayerScript.gameObject.layer = LayerMask.NameToLayer("Grabbed");
-            sPlayerScript.playerBody.AddForce(changePos * 40, ForceMode.Impulse);
+            sPlayerScript.playerBody.AddForce(changePos * 60, ForceMode.Impulse);
+            //sPlayerScript.playerBody.useGravity = true;
             sPlayerScript.ThrowAnim();
-            sPlayerScript.playerBody.useGravity = true;
+            
             playerBody.angularDrag = 0.05f;
             grabbing = false;
             grabbedObject = null;

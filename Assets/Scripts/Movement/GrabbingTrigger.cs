@@ -14,7 +14,7 @@ public class GrabbingTrigger : MonoBehaviour
                 Debug.Log("Dropped!");
                 script.isThrown = true;
                 //script.gameObject.layer = LayerMask.NameToLayer("SPlayer");
-                other.transform.parent.GetComponent<SPlayerControls>().Dropped();
+                other.transform.parent.GetComponent<SPlayerControls>().Dropped(false,true);
             }
             
         }

@@ -5215,9 +5215,11 @@ MonoBehaviour:
   playerBody: {fileID: 9199016485280215240}
   playerCollider: {fileID: 9199016485280215244}
   deathParticles: {fileID: 7432156154828129356}
+  renderer: {fileID: 0}
   isGrabbed: 0
   isThrown: 0
   minWalkSpeed: 0.1
+  startingPos: {fileID: 0}
 --- !u!1818360609 &7633395515490122659
 RotationConstraint:
   m_ObjectHideFlags: 0

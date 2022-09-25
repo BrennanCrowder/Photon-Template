@@ -5,13 +5,14 @@ using UnityEngine;
 public class BTriggerScript : MonoBehaviour
 {
     private GameObject body;
+    public bool track;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "SPlayer" )
         {
             body = other.gameObject.transform.parent.gameObject; // Get Reference to SPlayer root
            // Debug.Log("SPlayer ON Platform");
-            if (!body.GetComponent<SPlayerControls>().isGrabbed)
+            if (!body.GetComponent<SPlayerControls>().isGrabbed && track)
             {
                 
                 body.transform.SetParent(transform.parent); // Set Parent to Body Platform
@@ -25,7 +26,7 @@ public class BTriggerScript : MonoBehaviour
         if (other.tag == "SPlayer")
         {
             //Debug.Log("SPlayer OFF Platform");
-            if (!body.GetComponent<SPlayerControls>().isGrabbed)
+            if (!body.GetComponent<SPlayerControls>().isGrabbed && track)
             {
                 body.transform.SetParent(null);
             }
