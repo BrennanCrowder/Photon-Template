@@ -10,7 +10,7 @@ public class BPlayerControls : MonoBehaviour
     private InputActionMap playerControls;
     private bool moving;
     private bool throwing = false;
-    private bool grabbing = false;
+    [HideInInspector] public bool grabbing = false;
     private Coroutine moveRoutine;
     private Coroutine grabRoutine;
     private Coroutine dropRoutine;
@@ -26,7 +26,7 @@ public class BPlayerControls : MonoBehaviour
     public Transform dropLocation;
     public float grabDistance = 1;
     private bool fire;
-    private GameObject grabbedObject;
+    [HideInInspector] public GameObject grabbedObject;
     public float grabSpeed = .75f;
 
     private WaitForFixedUpdate fixedWait;

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class BPlayerHands : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Sprite closedHand;
+    public Sprite openHand;
+    public Sprite grabHand;
+    public SpriteRenderer handSprite;
+
     void Start()
     {
         
