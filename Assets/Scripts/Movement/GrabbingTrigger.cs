@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class GrabbingTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerExit(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.tag == "SPlayer")
+        {
+            Debug.Log("Dropped!");
+            other.transform.parent.GetComponent<SPlayerControls>().Dropped();
+        }
     }
 }

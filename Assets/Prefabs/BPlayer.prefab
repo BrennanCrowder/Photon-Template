@@ -110,6 +110,8 @@ GameObject:
   - component: {fileID: 5157979172005638189}
   - component: {fileID: 8530412172853986181}
   - component: {fileID: 7865830340800236150}
+  - component: {fileID: 1337850924475311036}
+  - component: {fileID: 102836862227912184}
   m_Layer: 3
   m_Name: BRHand
   m_TagString: Untagged
@@ -217,6 +219,31 @@ RotationConstraint:
   m_Sources:
   - sourceTransform: {fileID: 3492040184532617458}
     weight: 1
+--- !u!65 &1337850924475311036
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175031590595725027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.00000023841858, z: 0.00000023841858}
+--- !u!114 &102836862227912184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175031590595725027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59d8e2bd6faee34b927d5b35096239e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &569794809568102297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,6 +1166,8 @@ GameObject:
   - component: {fileID: 3691860327679271717}
   - component: {fileID: 1597344447967658238}
   - component: {fileID: 1353420886572620543}
+  - component: {fileID: 2871023965189230030}
+  - component: {fileID: 36822050676681277}
   m_Layer: 3
   m_Name: BLHand
   m_TagString: Untagged
@@ -1246,3 +1275,28 @@ RotationConstraint:
   m_Sources:
   - sourceTransform: {fileID: 3492040184532617458}
     weight: 1
+--- !u!65 &2871023965189230030
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910196043748961777}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.00000023841858, z: 0.00000023841858}
+--- !u!114 &36822050676681277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910196043748961777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59d8e2bd6faee34b927d5b35096239e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
