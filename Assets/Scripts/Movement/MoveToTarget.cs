@@ -14,7 +14,7 @@ public class MoveToTarget : MonoBehaviour
         defaultTarget = targetTransform;
         defaultSpeed = speed;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (!pauseReposition)
         {

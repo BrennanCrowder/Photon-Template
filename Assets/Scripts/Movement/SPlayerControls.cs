@@ -22,6 +22,7 @@ public class SPlayerControls : MonoBehaviour
     private bool doNotKill;
     public AudioSource deathSound;
     public AudioClip clip;
+
     private void Awake()
     {
         renderer = GetComponentInChildren<SpriteRenderer>();
@@ -109,7 +110,8 @@ public class SPlayerControls : MonoBehaviour
         deathSound.PlayOneShot(clip);
         Dropped();
         renderer.enabled = false;
-        playerBody.GetComponent<Collider>().enabled = false;
+        //playerBody.GetComponent<Collider>().enabled = false;
+        playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
         StartCoroutine(SpawnDelay(spawnLocation));
     }
 
@@ -150,6 +152,10 @@ public class SPlayerControls : MonoBehaviour
         yield return new WaitForSeconds(1);
         playerBody.transform.position = spawnLocation.position;
         playerBody.GetComponent<Collider>().enabled = true;
+        playerBody.velocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
+        playerBody.Sleep();
+        playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
         renderer.enabled = true;
     }
 

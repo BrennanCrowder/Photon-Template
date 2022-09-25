@@ -66,12 +66,13 @@ public class BPlayerControls : MonoBehaviour
             grabbing = false;
             playerBody.angularDrag = 0.05f;
             grabbedObject = null;
+            grabHand = null;
             escapeTimer = 0;
         }
         if (grabbing && grabbedObject != null)
         {
-            grabbedObject.GetComponent<SPlayerControls>().playerBody.Sleep();
-            grabbedObject.GetComponent<SPlayerControls>().playerBody.transform.position = grabHand.transform.position;
+            //grabbedObject.GetComponent<SPlayerControls>().playerBody.Sleep();
+            if (grabHand != null) grabbedObject.GetComponent<SPlayerControls>().playerBody.transform.position = grabHand.transform.position;
         }
         
     }
@@ -277,6 +278,7 @@ public class BPlayerControls : MonoBehaviour
         handScript.ResetTarget();
         handScript.ResetSpeed();
         grabbedObject = null;
+        grabHand = null;
         escapeTimer = 0;
         yield return null;
     }
@@ -302,7 +304,7 @@ public class BPlayerControls : MonoBehaviour
         {
             //sPlayerScript.playerBody.isKinematic = true;
             relativePos = crosshair.transform.position - hand.transform.position;
-            changePos = (relativePos.magnitude / (relativePos.magnitude + 2)) * relativePos.normalized * 0.75f;
+            changePos = (relativePos.magnitude / (relativePos.magnitude + 1f)) * relativePos.normalized * 0.75f;
             changePos *= -1;
             hand.transform.position = origHandPos - changePos;
           
@@ -319,6 +321,7 @@ public class BPlayerControls : MonoBehaviour
             playerBody.angularDrag = 0.05f;
             grabbing = false;
             grabbedObject = null;
+            grabHand = null;
             escapeTimer = 0;
         }
         handScript.pauseReposition = false;
