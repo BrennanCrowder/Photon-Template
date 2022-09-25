@@ -171,6 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killBox: {fileID: 995113603278004593}
-  openAmnt: 2
+  openAmnt: 2.5
   closeSpeed: 0.2
   openSpeed: 0.05
