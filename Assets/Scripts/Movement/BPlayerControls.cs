@@ -104,7 +104,7 @@ public class BPlayerControls : MonoBehaviour
 
     public void Aim(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && grabbing && !throwing)
+        if (ctx.performed && grabbing && !throwing && grabbedObject != null)
         {
             throwRoutine = StartCoroutine(Throw(ctx));
         } else if (ctx.canceled && throwing)
@@ -260,9 +260,16 @@ public class BPlayerControls : MonoBehaviour
 
     IEnumerator Throw(InputAction.CallbackContext ctx)
     {
+        
         throwing = true; 
+       
         var hand = grabbedObject.transform.parent.gameObject;
         var handScript = hand.GetComponent<MoveToTarget>();
+        if (handScript.defaultTarget != handScript.targetTransform)
+        {
+            throwing = false;
+            yield return null;
+        }
         var sPlayerScript = grabbedObject.GetComponent<SPlayerControls>();
         handScript.pauseReposition = true;
         Vector3 relativePos = Vector3.zero;
