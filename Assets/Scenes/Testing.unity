@@ -183,10 +183,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5025434764451800244, guid: 0edfb56082d98964f93df19b53b41c0a, type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0edfb56082d98964f93df19b53b41c0a, type: 3}
 --- !u!4 &211533332 stripped
@@ -613,29 +609,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 589485046187458573, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3088170996271856126, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
+    - target: {fileID: 7633395515490122659, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 126312630}
-    - target: {fileID: 9199016485280215244, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9199016485951046883, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
       propertyPath: m_Name
       value: SPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 9199016485951046883, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 9199016485951046892, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
-      propertyPath: jumpPower
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9199016485951046894, guid: d39ac7526ea69bc4aa4153813a6fc1e4, type: 3}
       propertyPath: m_RootOrder

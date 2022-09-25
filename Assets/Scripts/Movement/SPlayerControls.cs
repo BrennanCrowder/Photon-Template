@@ -68,7 +68,7 @@ public class SPlayerControls : MonoBehaviour
 
     IEnumerator SMoving(InputAction.CallbackContext ctx)
     {
-        while (moving)
+        while (moving && !isGrabbed)
         {
             playerBody.AddForce(new Vector3(speed * ctx.ReadValue<Vector2>().x, 0, 0), ForceMode.Acceleration);
             yield return new WaitForFixedUpdate();
@@ -92,16 +92,17 @@ public class SPlayerControls : MonoBehaviour
     {
         //playerCollider.isTrigger = true;
         playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
-        playerBody.velocity = Vector3.zero;
-        playerBody.angularVelocity = Vector3.zero;
         playerBody.useGravity = false;
         isThrown = false;
         isGrabbed = true;
+        playerBody.velocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
     }
 
     public void Dropped()
     {
         playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
+        
         playerBody.useGravity = true;
         //Debug.Log("RESET Collider and Grav");
         //playerBody.velocity = Vector3.zero;

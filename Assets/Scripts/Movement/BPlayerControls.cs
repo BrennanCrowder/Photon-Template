@@ -270,12 +270,14 @@ public class BPlayerControls : MonoBehaviour
         Vector3 origHandPos = handScript.defaultTarget.transform.position;
         while (throwing && grabbing && !fire)
         {
+            //sPlayerScript.playerBody.isKinematic = true;
             relativePos = crosshair.transform.position - hand.transform.position;
             changePos = (relativePos.magnitude / (relativePos.magnitude + 2)) * relativePos.normalized * 0.75f;
             hand.transform.position = origHandPos - changePos;
           
             yield return fixedWait;
         }
+        //sPlayerScript.playerBody.isKinematic = false;
         if (fire)// && Vector3.Angle(relativePos.normalized, Vector3.down) >= 60
         {
             //sPlayerScript.gameObject.layer = LayerMask.NameToLayer("Grabbed");
