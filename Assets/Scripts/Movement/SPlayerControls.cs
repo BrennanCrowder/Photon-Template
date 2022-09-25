@@ -39,14 +39,21 @@ public class SPlayerControls : MonoBehaviour
         }
 
     }
-
+    private int count = 1;
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (CheckGrounded())
+        if (ctx.performed && CheckGrounded() && !isGrabbed)
         {
             playerBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
         }
-       
+        if (ctx.performed && isGrabbed)
+        {
+            count = transform.root.GetComponent<BPlayerControls>().Escape(count);
+
+        } else if (!isGrabbed && count != 1)
+        {
+            count = 1;
+        }
     }
 
     public bool CheckGrounded()
@@ -83,16 +90,19 @@ public class SPlayerControls : MonoBehaviour
 
     public void Grabbed()
     {
-        playerCollider.enabled = false;
+        playerCollider.isTrigger = true;
         playerBody.velocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
         playerBody.useGravity = false;
         isGrabbed = true;
     }
 
     public void Dropped()
     {
-        playerCollider.enabled = true;
+        playerCollider.isTrigger = false;
         playerBody.useGravity = true;
+        playerBody.velocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
         isGrabbed = false;
     }
 
@@ -110,6 +120,11 @@ public class SPlayerControls : MonoBehaviour
         animator.SetBool("Walking", playerBody.velocity.magnitude > minWalkSpeed);
         animator.SetBool("Grounded", CheckGrounded());
         animator.SetBool("Grabbed", isGrabbed);
-        // NEED TO ADD THROWN ANIMATION
+    }
+
+    public void ThrowAnim()
+    {
+        isGrabbed = false;
+        animator.SetTrigger("Thrown");
     }
 }

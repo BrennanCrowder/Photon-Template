@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveToTarget : MonoBehaviour
 {
     public Transform targetTransform;
-    private Transform defaultTarget;
+    public Transform defaultTarget;
     private float defaultSpeed;
     public float speed = 0.001f;
     public bool pauseReposition = false;

@@ -7,11 +7,16 @@ public class BTriggerScript : MonoBehaviour
     private GameObject body;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "SPlayer")
+        if(other.tag == "SPlayer" )
         {
+            body = other.gameObject.transform.parent.gameObject; // Get Reference to SPlayer root
             Debug.Log("SPlayer ON Platform");
-            body = other.gameObject.transform.root.gameObject; // Get Reference to SPlayer root
-            body.transform.SetParent(transform.parent); // Set Parent to Body Platform
+            if (!body.GetComponent<SPlayerControls>().isGrabbed)
+            {
+                
+                body.transform.SetParent(transform.parent); // Set Parent to Body Platform
+            }
+            
         }
     }
 
@@ -20,7 +25,10 @@ public class BTriggerScript : MonoBehaviour
         if (other.tag == "SPlayer")
         {
             Debug.Log("SPlayer OFF Platform");
-            body.transform.SetParent(null);
+            if (!body.GetComponent<SPlayerControls>().isGrabbed)
+            {
+                body.transform.SetParent(null);
+            }
             body = null;
         }
     }
@@ -30,5 +38,8 @@ public class BTriggerScript : MonoBehaviour
         return body;
     }
 
-    //public GameObject
+    public void ResetBody()
+    {
+        body = null;
+    }
 }
