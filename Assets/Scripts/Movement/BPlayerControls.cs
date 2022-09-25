@@ -169,7 +169,7 @@ public class BPlayerControls : MonoBehaviour
         switch (count)
         {
             case (3):
-                hand.transform.Translate(new Vector3(hand.transform.position.x * .25f, .5f, 0) * count, Space.World);
+                hand.transform.Translate(new Vector3(0, .5f, 0) * count, Space.World);
                 var handScript = hand.GetComponent<MoveToTarget>();
                 var scrpt = grabbedObject.GetComponent<SPlayerControls>();
 
@@ -185,7 +185,7 @@ public class BPlayerControls : MonoBehaviour
                 break;
 
             default:
-                hand.transform.Translate(new Vector3( hand.transform.position.x * .25f, .5f, 0) * count, Space.World);
+                hand.transform.Translate(new Vector3(0, .5f, 0) * count, Space.World);
                 break;
         }
         count++;
