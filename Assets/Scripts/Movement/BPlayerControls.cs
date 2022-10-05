@@ -6,33 +6,47 @@ using UnityEngine.InputSystem;
 public class BPlayerControls : MonoBehaviour
 {
     public float moveSpeed = .001f;
+    public float grabDistance = 1;
+    public float grabSpeed = .75f;
     public Rigidbody playerBody;
+    public GameObject Head;
+    public GameObject rHand;
+    public GameObject lHand;
     private InputActionMap playerControls;
-    private bool moving;
-    private bool throwing = false;
-    [HideInInspector] public bool grabbing = false;
+    public BTriggerScript grabTrigger;
+    public BCrushScript lCrushTrigger;
+    public BCrushScript rCrushTrigger;
+    public GameObject crosshair;
+    public Transform dropLocation;
+
+    private ParticleSystem deathParticles;
+    private Transform startingPos;
+    private WaitForFixedUpdate fixedWait;
+    private List<SpriteRenderer> renderers = new List<SpriteRenderer>();
+
     private Coroutine moveRoutine;
     private Coroutine grabRoutine;
     private Coroutine dropRoutine;
     private Coroutine throwRoutine;
+    
+
+    
+    
+    
+    
+    
+    
+
+    public bool isHolding;
+    public bool isMoving;
+    public bool isThrowing;
+    public bool fire;
+    public bool isDropping;
+    public bool isGrabbing;
     private float escapeTimer;
-    public BTriggerScript grabTrigger;
-    public BCrushScript lCrushTrigger;
-    public BCrushScript rCrushTrigger;
-    public GameObject Head;
-    public GameObject rHand;
-    public GameObject lHand;
-    public GameObject crosshair;
-    public Transform dropLocation;
-    public float grabDistance = 1;
-    private bool fire;
-    [HideInInspector] public GameObject grabbedObject;
-    [HideInInspector] public GameObject grabHand;
-    public float grabSpeed = .75f;
-    private Transform startingPos;
-    private WaitForFixedUpdate fixedWait;
-    private List<SpriteRenderer> renderers = new List<SpriteRenderer>();
-    private ParticleSystem deathParticles;
+    public GameObject grabbedObject;
+    public GameObject grabHand;
+
     private void Awake()
     {
         //Cursor.lockState = CursorLockMode.Confined;
@@ -57,36 +71,58 @@ public class BPlayerControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!grabbing)
+        if (!isHolding && !isGrabbing)
         {
             lCrushTrigger.enableCrush = playerBody.velocity.x > .15;
             rCrushTrigger.enableCrush = playerBody.velocity.x < -.15;
-        } else if (grabbedObject != null && !grabbedObject.GetComponent<SPlayerControls>().renderer.enabled) 
+        } else if (isHolding && grabbedObject.GetComponent<SPlayerControls>().isDead) 
         {
-            grabbing = false;
+            /*holding = false;
+            isGrabbing = false;
             playerBody.angularDrag = 0.05f;
             grabbedObject = null;
             grabHand = null;
-            escapeTimer = 0;
-        }
-        if (grabbing && grabbedObject != null)
-        {
-            //grabbedObject.GetComponent<SPlayerControls>().playerBody.Sleep();
-            if (grabHand != null) grabbedObject.GetComponent<SPlayerControls>().playerBody.transform.position = grabHand.transform.position;
+            escapeTimer = 0;*/
+            ResetActions();
         }
         
     }
+
+    public void ResetActions()
+    {
+        //Debug.Log("Resetting Actions");
+        if (grabbedObject)
+        {
+            grabbedObject.transform.SetParent(null);
+        }
+        isHolding = false;
+        isMoving = false;
+        isThrowing = false;
+        fire = false;
+        isDropping = false;
+        isGrabbing = false;
+        escapeTimer = 0;
+        grabHand = null;
+        grabbedObject = null;
+        playerBody.angularDrag = 0.05f;
+        lHand.GetComponent<BPlayerHands>().enableClosedHand();
+        lHand.GetComponent<MoveToTarget>().ResetAll();
+
+        rHand.GetComponent<BPlayerHands>().enableClosedHand();
+        rHand.GetComponent<MoveToTarget>().ResetAll();
+        StopAllCoroutines();
+}
+
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled && moving)
+        if (ctx.canceled && isMoving)
         {
-            moving = false;
+            isMoving = false;
             StopCoroutine(moveRoutine);
         }
-        if (ctx.performed && !throwing && !grabbing)
+        if (ctx.performed && !isHolding)
         {
-            moving = true;
-            Debug.Log("Moving...");
+            isMoving = true;
             moveRoutine = StartCoroutine(Moving(ctx));
         }
         
@@ -96,14 +132,14 @@ public class BPlayerControls : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (!grabbing && !throwing) 
+            if (!isHolding && !isThrowing && !isDropping && !isGrabbing) 
             {
                 //Debug.Log("Grabbing...");
                 AttemptGrab();
-            } else if (!throwing)
+            } else if (isHolding && !isThrowing && !isDropping && !isGrabbing) ///
             {
                 //Debug.Log("Dropping...");
-                Drop();
+                dropRoutine = StartCoroutine(Dropping());
             }
         } 
     }
@@ -117,21 +153,14 @@ public class BPlayerControls : MonoBehaviour
         }
     }
 
-    private void Drop()
-    {
-        dropRoutine = StartCoroutine(Dropping());
-        
-    }
-
     public void Aim(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && grabbing && !throwing && grabbedObject != null)
+        if (ctx.performed && isHolding && !isThrowing && !isGrabbing)
         {
             throwRoutine = StartCoroutine(Throw(ctx));
-        } else if (ctx.canceled && throwing)
+        } else if (ctx.canceled && isThrowing)
         {
-            //StopCoroutine(throwRoutine);
-            throwing = false;
+            isThrowing = false;
         }
     }
 
@@ -139,7 +168,7 @@ public class BPlayerControls : MonoBehaviour
     public void CursorInfo(InputAction.CallbackContext ctx)
     {
         EyesAt(ctx);
-        if (throwing)
+        if (isThrowing)
         {
             
             crosshair.transform.position = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
@@ -149,7 +178,7 @@ public class BPlayerControls : MonoBehaviour
 
     public void Fire(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && throwing && !fire)
+        if (ctx.performed && isThrowing && !fire)
         {
             fire = true;
         }
@@ -179,15 +208,16 @@ public class BPlayerControls : MonoBehaviour
                 var handScript = hand.GetComponent<MoveToTarget>();
                 var scrpt = grabbedObject.GetComponent<SPlayerControls>();
 
-                playerBody.angularDrag = 0.05f;
-                //scrpt.transform.SetParent(null);
-                scrpt.Dropped(true,true);
+                scrpt.Dropped(true, true);
 
-                grabbing = false;
-                handScript.ResetTarget();
-                handScript.ResetSpeed();
-                grabbedObject = null;
-                escapeTimer = 0;
+                //playerBody.angularDrag = 0.05f;
+                //isDropping = false;
+                //isHolding = false;
+                //handScript.ResetTarget();
+                //handScript.ResetSpeed();
+                //grabbedObject = null;
+                //escapeTimer = 0;
+                ResetActions();
                 break;
 
             default:
@@ -201,8 +231,8 @@ public class BPlayerControls : MonoBehaviour
 
     IEnumerator Moving(InputAction.CallbackContext ctx)
     {
-        float time = Time.time;
-        while (moving)
+        //float time = Time.time;
+        while (isMoving)
         {
             playerBody.AddForce(new Vector3(moveSpeed * ctx.ReadValue<Vector2>().x, 0, 0), ForceMode.Acceleration);
             yield return fixedWait;
@@ -212,87 +242,101 @@ public class BPlayerControls : MonoBehaviour
 
     IEnumerator Grab(GameObject sPlayer)
     {
-        grabbing = true;
-        //Debug.Log(sPlayer);
+        isGrabbing = true;
+
         SPlayerControls rbScript = sPlayer.GetComponent<SPlayerControls>();// SPlayer
+        if (rbScript.isDead)
+        {
+            isGrabbing = false;
+            yield return null;
+        }
         Rigidbody rb = rbScript.playerBody; // SBody
-        lCrushTrigger.enableCrush = false;
-        rCrushTrigger.enableCrush = false;
+
+        //lCrushTrigger.enableCrush = false;
+        //rCrushTrigger.enableCrush = false;
+
         GameObject hand = Vector3.Distance(rHand.transform.position, rb.transform.position) > Vector3.Distance(lHand.transform.position, rb.transform.position) ? lHand : rHand; // Closest Hand
         grabHand = hand;
+        
+        hand.GetComponent<BPlayerHands>().enableGrabbingSprite();
 
         MoveToTarget scrpt = hand.GetComponent<MoveToTarget>(); // Hand Script
 
         scrpt.SetTarget(rb.transform);
         scrpt.setSpeed(grabSpeed);
-        
-        while (grabbing == true && Vector3.Distance(hand.transform.position,rb.transform.position) >= grabDistance)
+
+        while (isGrabbing && Vector3.Distance(hand.transform.position, rb.transform.position) >= grabDistance)
         {
-            if (grabTrigger.GetBody() == null)
+            if (grabTrigger.GetBody() == null || rbScript.isDead)
             {
                 scrpt.ResetTarget();
-                grabbing = false;
+                isGrabbing = false;
             }
             yield return fixedWait;
         }
-        if (grabbing == true)
+        if (isGrabbing == true)
         {
-            //grabTrigger.ResetBody();
             playerBody.angularDrag = 10;
             lCrushTrigger.enableCrush = false;
             rCrushTrigger.enableCrush = false;
-            //rb.transform.rotation = hand.transform.rotation;
-
-            sPlayer.transform.SetParent(hand.transform);
             
+            sPlayer.transform.SetParent(hand.transform);
+            isHolding = true;
+            hand.GetComponent<BPlayerHands>().enableHoldSprite();
             rbScript.Grabbed();
             rb.transform.position = hand.transform.position;
             scrpt.ResetTarget();
             grabbedObject = sPlayer;
         } else
         {
+            ResetActions();
             Debug.Log("GRABBING FAILED");
         }
-        
+
+        grabRoutine = null;
+        isGrabbing = false;
         yield return null;
     }
 
     IEnumerator Dropping()
     {
-        GameObject hand = grabbedObject.transform.parent.gameObject;
-        var handScript = hand.GetComponent<MoveToTarget>();
+        //GameObject hand = grabbedObject.transform.parent.gameObject;
+        isDropping = true;
+        var handScript = grabHand.GetComponent<MoveToTarget>();
         var scrpt = grabbedObject.GetComponent<SPlayerControls>();
 
         handScript.SetTarget(dropLocation);
 
-        while(Vector3.Distance(hand.transform.position, dropLocation.position) >= .3)
+        while(grabHand != null && Vector3.Distance(grabHand.transform.position, dropLocation.position) >= .3)
         {
             yield return fixedWait;
         }
         
-        playerBody.angularDrag = 0.05f;
-        //scrpt.transform.SetParent(null);
+        //playerBody.angularDrag = 0.05f;
+        
         scrpt.Dropped(true,true);
-       
-        grabbing = false;
-        handScript.ResetTarget();
-        handScript.ResetSpeed();
-        grabbedObject = null;
-        grabHand = null;
-        escapeTimer = 0;
+
+        ResetActions();
+        //isHolding = false;
+        //handScript.ResetTarget();
+        //handScript.ResetSpeed();
+        //grabbedObject = null;
+        //grabHand = null;
+        // escapeTimer = 0;
+        //isDropping = false;
+        dropRoutine = null;
         yield return null;
     }
 
     IEnumerator Throw(InputAction.CallbackContext ctx)
     {
-        
-        throwing = true; 
+        isThrowing = true; 
        
         var hand = grabbedObject.transform.parent.gameObject;
         var handScript = hand.GetComponent<MoveToTarget>();
         if (handScript.defaultTarget != handScript.targetTransform)
         {
-            throwing = false;
+            isThrowing = false;
             yield return null;
         }
         var sPlayerScript = grabbedObject.GetComponent<SPlayerControls>();
@@ -300,9 +344,8 @@ public class BPlayerControls : MonoBehaviour
         Vector3 relativePos = Vector3.zero;
         Vector3 changePos = Vector3.zero;
         Vector3 origHandPos = handScript.defaultTarget.transform.position;
-        while (throwing && grabbing && !fire)
+        while (isThrowing && isHolding && !fire)
         {
-            //sPlayerScript.playerBody.isKinematic = true;
             relativePos = crosshair.transform.position - hand.transform.position;
             changePos = (relativePos.magnitude / (relativePos.magnitude + 1f)) * relativePos.normalized * 0.75f;
             changePos *= -1;
@@ -310,38 +353,36 @@ public class BPlayerControls : MonoBehaviour
           
             yield return fixedWait;
         }
-        //sPlayerScript.playerBody.isKinematic = false;
-        if (fire)// && Vector3.Angle(relativePos.normalized, Vector3.down) >= 60
+
+        if (fire && !isDropping)
         {
-            //sPlayerScript.gameObject.layer = LayerMask.NameToLayer("Grabbed");
             sPlayerScript.playerBody.AddForce(changePos * 60, ForceMode.Impulse);
-            //sPlayerScript.playerBody.useGravity = true;
             sPlayerScript.ThrowAnim();
-            
-            playerBody.angularDrag = 0.05f;
-            grabbing = false;
-            grabbedObject = null;
-            grabHand = null;
-            escapeTimer = 0;
+
+            ResetActions();
+            //playerBody.angularDrag = 0.05f;
+            //isHolding = false;
+            //grabbedObject = null;
+            //grabHand = null;
+            //escapeTimer = 0;
         }
+
         handScript.pauseReposition = false;
-        
-        throwing = false;
+        isThrowing = false;
+        throwRoutine = null;
         fire = false;
-    yield return null;
+        yield return null;
     }
 
     public void Kill()
     {
-        // Particles
-        // Sound
-        // Death
         deathParticles.Play();
         foreach(SpriteRenderer rend in renderers)
         {
             rend.enabled = false;
         }
         playerBody.GetComponent<Collider>().enabled = false;
+        ResetActions();
         StartCoroutine(BSpawnDelay(startingPos));
     }
 

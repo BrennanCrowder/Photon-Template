@@ -8,7 +8,7 @@ public class SpikesKill : MonoBehaviour
     {
         if (other.tag == "SPlayer")
         {
-            other.transform.parent.GetComponent<SPlayerControls>().Kill();
+            other.transform.GetComponent<SPlayerControls>().Kill();
         }
     }
 }

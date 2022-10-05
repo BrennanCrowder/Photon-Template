@@ -16,6 +16,6 @@ public class BPlayerHead : MonoBehaviour
 
     void Update()
     {
-        headAnimator.SetBool("Moving", playerBody.velocity.magnitude > 0.25f || playerControls.grabbing);
+        headAnimator.SetBool("Moving", playerBody.velocity.magnitude > 0.25f || playerControls.isHolding);
     }
 }

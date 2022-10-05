@@ -8,13 +8,13 @@ public class GrabbingTrigger : MonoBehaviour
     {
         if (other.tag == "SPlayer")
         {
-            var script = other.transform.parent.GetComponent<SPlayerControls>();
+            var script = other.transform.GetComponent<SPlayerControls>();
             if (!script.isThrown && !script.isGrabbed)
             {
                 Debug.Log("Dropped!");
                 script.isThrown = true;
                 //script.gameObject.layer = LayerMask.NameToLayer("SPlayer");
-                other.transform.parent.GetComponent<SPlayerControls>().Dropped(false,true);
+                other.transform.GetComponent<SPlayerControls>().Dropped(false,true);
             }
             
         }

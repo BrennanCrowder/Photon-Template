@@ -7,32 +7,36 @@ public class SPlayerControls : MonoBehaviour
     public float speed = 1f;
     public float jumpPower = 3;
     public float jumpCheckDist = 1f;
+    public GameObject BBoy;
     public Rigidbody playerBody;
     public Collider playerCollider;
     public ParticleSystem deathParticles;
     private bool moving;
     private Coroutine moveRountine;
-    public SpriteRenderer renderer;
+    public GameObject sprite;
+    private SpriteRenderer renderer;
+    public Transform spawnPos;
     private Animator animator;
     public bool isGrabbed = false;
     public bool isThrown;
+    public bool isDead;
     [Header("Animator Variables")]
     public float minWalkSpeed = 0.1f;
-    public Transform startingPos;
+    
     private bool doNotKill;
     public AudioSource deathSound;
     public AudioClip clip;
 
     private void Awake()
     {
-        renderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
-        startingPos.position = transform.position;
+        renderer = sprite.GetComponent<SpriteRenderer>();
+        animator = sprite.GetComponent<Animator>();
+        //startingPos = transform;
     }
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled)
+        if (ctx.canceled && moving)
         {
             moving = false;
             StopCoroutine(moveRountine);
@@ -53,7 +57,7 @@ public class SPlayerControls : MonoBehaviour
         }
         if (ctx.performed && isGrabbed)
         {
-            count = transform.root.GetComponent<BPlayerControls>().Escape(count);
+            count = BBoy.GetComponent<BPlayerControls>().Escape(count);
 
         } else if (!isGrabbed && count != 1)
         {
@@ -86,15 +90,18 @@ public class SPlayerControls : MonoBehaviour
         {
             return;
         }
+        isDead = true;
         // Particle
         // Sound
         // Life?
         // Reset Pos
         deathParticles.Play();
-        Dropped(true,true);
+        deathSound.PlayOneShot(clip);
+        Dropped(true);
         renderer.enabled = false;
-        playerBody.GetComponent<Collider>().enabled = false;
-        StartCoroutine(SpawnDelay(startingPos));
+        playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
+        //playerBody.GetComponent<Collider>().enabled = false;
+        StartCoroutine(SpawnDelay(spawnPos));
     }
     public void Kill(Transform spawnLocation)
     {
@@ -102,13 +109,14 @@ public class SPlayerControls : MonoBehaviour
         {
             return;
         }
+        isDead = true;
         // Particle
         // Sound
         // Life?
         // Reset Pos
         deathParticles.Play();
         deathSound.PlayOneShot(clip);
-        Dropped();
+        Dropped(true);
         renderer.enabled = false;
         //playerBody.GetComponent<Collider>().enabled = false;
         playerBody.gameObject.layer = LayerMask.NameToLayer("Grabbed");
@@ -156,6 +164,7 @@ public class SPlayerControls : MonoBehaviour
         playerBody.angularVelocity = Vector3.zero;
         playerBody.Sleep();
         playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
+        isDead = false;
         renderer.enabled = true;
     }
 

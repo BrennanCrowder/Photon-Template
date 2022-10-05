@@ -19,9 +19,9 @@ public class BPlayerHands : MonoBehaviour
 
     void Update()
     {
-        if (playerControls.grabbing && playerControls.grabHand == gameObject)
+        /*if (playerControls.isGrabbing && playerControls.grabHand == gameObject)
         {
-            if (playerControls.grabbedObject != null)
+            if (playerControls.isHolding)
             {
                 handSprite.sprite = grabHand;
                 fingers.SetActive(true);
@@ -32,10 +32,28 @@ public class BPlayerHands : MonoBehaviour
                 fingers.SetActive(false);
             }
         }
-        else
+        else if (!playerControls.isHolding)
         {
             handSprite.sprite = closedHand;
             fingers.SetActive(false);
-        }
+        }*/
+    }
+
+    public void enableGrabbingSprite()
+    {
+        handSprite.sprite = openHand;
+        fingers.SetActive(false);
+    }
+
+    public void enableHoldSprite()
+    {
+        handSprite.sprite = grabHand;
+        fingers.SetActive(true);
+    }
+
+    public void enableClosedHand()
+    {
+        handSprite.sprite = closedHand;
+        fingers.SetActive(false);
     }
 }

@@ -42,4 +42,11 @@ public class MoveToTarget : MonoBehaviour
     {
         speed = defaultSpeed;
     }
+
+    public void ResetAll()
+    {
+        targetTransform = defaultTarget;
+        speed = defaultSpeed;
+        pauseReposition = false;
+    }
 }
