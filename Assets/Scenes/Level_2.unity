@@ -8433,6 +8433,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3948553515605054829, guid: 76a12cce2e1db6b49a1ef79eaaba173f, type: 3}
+      propertyPath: wooshClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c11af2c817173fa4bb86efb32ab7c3d4, type: 3}
+    - target: {fileID: 3948553515605054829, guid: 76a12cce2e1db6b49a1ef79eaaba173f, type: 3}
+      propertyPath: closeSpeed
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76a12cce2e1db6b49a1ef79eaaba173f, type: 3}
 --- !u!114 &1312252922 stripped

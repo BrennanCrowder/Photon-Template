@@ -18,7 +18,9 @@ public class BPlayerControls : MonoBehaviour
     public BCrushScript rCrushTrigger;
     public GameObject crosshair;
     public Transform dropLocation;
-
+    public AudioSource audioSource;
+    public AudioClip deathClip;
+    public AudioClip throwClip;
     private ParticleSystem deathParticles;
     private Transform startingPos;
     private WaitForFixedUpdate fixedWait;
@@ -356,6 +358,7 @@ public class BPlayerControls : MonoBehaviour
 
         if (fire && !isDropping)
         {
+            audioSource.PlayOneShot(throwClip);
             sPlayerScript.playerBody.AddForce(changePos * 60, ForceMode.Impulse);
             sPlayerScript.ThrowAnim();
 
@@ -376,6 +379,7 @@ public class BPlayerControls : MonoBehaviour
 
     public void Kill()
     {
+        audioSource.PlayOneShot(deathClip);
         deathParticles.Play();
         foreach(SpriteRenderer rend in renderers)
         {

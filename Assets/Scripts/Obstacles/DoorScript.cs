@@ -17,8 +17,13 @@ public class DoorScript : MonoBehaviour
     public float openAmnt = 6f;
     public float closeSpeed = .5f;
     public float openSpeed = .25f;
+    private AudioSource audioSource;
+    public AudioClip impactClip;
+    public AudioClip wooshClip;
+    public AudioClip retractClip;
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         fixedWait = new WaitForFixedUpdate();
         startingPos = transform.position;
         openPos = new Vector3(startingPos.x,startingPos.y + openAmnt, startingPos.z);
@@ -47,14 +52,18 @@ public class DoorScript : MonoBehaviour
 
     IEnumerator Open()
     {
+        yield return new WaitForSeconds(.15f);
+        audioSource.PlayOneShot(retractClip);
         open = false;
         close = false;
         fullyClosed = false;
+        
         while (!fullyOpen && !close)
         {
-            transform.position = Vector3.Lerp(transform.position, openPos, closeSpeed);
+            transform.position = Vector3.Lerp(transform.position, openPos, openSpeed);
             if (Vector3.Distance(transform.position, openPos) <= .1)
             {
+                //audioSource.Stop();
                 fullyOpen = true;
             }
                 yield return fixedWait;
@@ -65,6 +74,13 @@ public class DoorScript : MonoBehaviour
 
     IEnumerator Close()
     {
+        yield return new WaitForSeconds(.15f);
+        audioSource.Stop();
+        if(Vector3.Distance(transform.position, startingPos) >= .5f) {
+            audioSource.PlayOneShot(wooshClip);
+        } 
+        
+       
         close = true;
         open = false;
         fullyOpen = false;
@@ -74,6 +90,7 @@ public class DoorScript : MonoBehaviour
             if (Vector3.Distance(transform.position, startingPos) <= .1)
             {
                 fullyClosed = true;
+                audioSource.PlayOneShot(impactClip);
             }
             yield return fixedWait;
         }
