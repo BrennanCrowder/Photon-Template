@@ -165,6 +165,7 @@ public class SPlayerControls : MonoBehaviour
         playerBody.Sleep();
         playerBody.gameObject.layer = LayerMask.NameToLayer("SPlayer");
         isDead = false;
+        deathSound.Stop();
         renderer.enabled = true;
     }
 
